@@ -17,8 +17,8 @@ original_coins = 0
 coins = 0
 items = ""
 #Checking if savefile exist with os import and if it exist, read it then apply it to the game ,
-if os.path.exists("savefile.txt"):
-    with open("savefile.txt","r") as file:
+if os.path.exists(f"{directory}\savefile.txt"):
+    with open(f"{directory}\savefile.txt","r") as file:
         stats = file.readline()
         if len(stats) >= 3 : #Making sure the length of first line is atleast 3 as a default value of saving
             seperate = stats.index(":")
@@ -83,11 +83,11 @@ class Shop():
         self.item2_button.buy("extra_life",2000)
         draw_text("2000",large_font,"Black",140,180)
 
-        self.item3_button.buy("black",250)
-        draw_text("250",large_font,"Black",220,180)
+        self.item3_button.buy("extra_life2",3000)
+        draw_text("3000",large_font,"Black",220,180)
 
-        self.item4_button.buy("white",50)
-        draw_text("50",large_font,"Black",305,180)
+        self.item4_button.buy("extra_life3",5000)
+        draw_text("5000",large_font,"Black",295,180)
 
 class Background():
     def __init__(self):
@@ -115,15 +115,13 @@ class Button():
 
         shop_background2_icon = pygame.image.load(f"{directory}\sprite\shop_background2_icon.png").convert_alpha()
         extra_life_icon = pygame.image.load(f"{directory}\sprite\life.png").convert_alpha()
-        item2 = pygame.image.load(f"{directory}\sprite\item1.png").convert_alpha()
-        item2 = pygame.image.load(f"{directory}\sprite\item1.png").convert_alpha()
-        
+
         soldout = pygame.image.load(f"{directory}\sprite\soldout.png").convert_alpha()
 
         self.available = True
         self.type_index = type
         self.number_index = 0
-        image = [[start_image1,start_image2],[shop_image1,shop_image2],[retry_image1,retry_image2],[back_image1,back_image2],[shop_background2_icon,soldout],[extra_life_icon,soldout],[item2,soldout],[item2,soldout]]
+        image = [[start_image1,start_image2],[shop_image1,shop_image2],[retry_image1,retry_image2],[back_image1,back_image2],[shop_background2_icon,soldout],[extra_life_icon,soldout],[extra_life_icon,soldout],[extra_life_icon,soldout]]
         self.image = image
         self.rect = self.image[self.type_index][self.number_index].get_rect()
         self.rect.topleft = (x,y)
@@ -145,7 +143,7 @@ class Button():
                 if shop_item not in items :
                     items = f"{items}{shop_item}\n"
                     coins -= price
-                    savetxt("savefile.txt","w")
+                    savetxt(f"{directory}\savefile.txt","w")
         if shop_item in items : self.number_index = 1
 
         screen.blit(self.image[self.type_index][self.number_index], (self.rect.x, self.rect.y))
@@ -348,7 +346,7 @@ while True :
     for event in pygame.event.get():
         if event.type == pygame.QUIT :
             #Savefile the stats when its being closed
-            savetxt("savefile.txt","w")
+            savetxt(f"{directory}\savefile.txt","w")
             pygame.quit()
             exit()
 
@@ -356,7 +354,9 @@ while True :
     if first_game :
         screen.fill("Blue")
         if start_button.draw() : # Starting screen
-            if "extra_life" in items : extra_life = 1 #Shop item check
+            if "extra_life" in items : extra_life += 1 #Shop item check
+            if "extra_life2" in items : extra_life += 1 #Shop item check
+            if "extra_life3" in items : extra_life += 1 #Shop item check
             game_active = True 
             first_game = False
         elif shop_button.draw() or shop_game : # Go to shop screen
@@ -451,7 +451,7 @@ while True :
             #Then continue
             else:
                 #Save to txt
-                savetxt("savefile.txt","w")
+                savetxt(f"{directory}\savefile.txt","w")
 
                 #Draw the text on screen
                 draw_text(f"GAME OVER!", large_font, "Black", 125, 150)
@@ -467,6 +467,8 @@ while True :
                     scroll = 0
                     counter_fade = 0
                     if "extra_life" in items : extra_life = 1
+                    if "extra_life2" in items : extra_life = 1
+                    if "extra_life3" in items : extra_life = 1
                     player.rect.center = (screen_width //2 , screen_height - 200 )
                     enemy_group.empty()
                     platform_group.empty()
