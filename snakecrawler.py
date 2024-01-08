@@ -33,7 +33,6 @@ if os.path.exists(f"{directory}\savefile.txt"):
             items = "" 
         file.close()
 else:
-    print("a")
     high_score = 0
     coins = 0
     items = ""
@@ -310,15 +309,15 @@ def draw_text(text, font, color, x, y): #A fucntion to draw text
     screen.blit(image, (x,y))
 
 def savetxt(path,mode): #A function to save file 
-
         global high_score, original_coins, coins, items
         #Will update the save file if either the high score updates or coin is spend
-        with open(path, mode) as file:
-            if score > high_score :
-                high_score = score
+        if score > high_score :
+            high_score = score
+            with open(path, mode) as file:
                 file.write(f"{str(high_score)}:{str(coins)}\n{str(items)}")
-            if original_coins > coins :
-                    file.write(f"{str(high_score)}:{str(coins)}\n{str(items)}")
+        if original_coins > coins :
+            with open(path, mode) as file:
+                file.write(f"{str(high_score)}:{str(coins)}\n{str(items)}")
 
 
 #The calling of classes and Sprites
