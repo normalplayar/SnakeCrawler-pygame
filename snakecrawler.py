@@ -353,7 +353,9 @@ while True :
 
                                                                                 #Starting state check
     if first_game :
-        screen.fill("Blue")
+        title = pygame.image.load(f"{directory}\sprite\menu.png")
+        screen.blit(title,(0,0))
+        
         if start_button.draw() : # Starting screen
             if "extra_life" in items : extra_life += 1 #Shop item check
             if "extra_life2" in items : extra_life += 1 #Shop item check
