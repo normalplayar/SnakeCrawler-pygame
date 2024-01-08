@@ -52,14 +52,14 @@ shop_game = False
 
 
 #Minecraft font imports
-small_font = pygame.font.SysFont(f"{directory}a\Minecraft.ttf" , 25)
-large_font = pygame.font.SysFont(f"{directory}a\Minecraft.ttf" , 28)
+small_font = pygame.font.SysFont(f"{directory}\Minecraft.ttf" , 25)
+large_font = pygame.font.SysFont(f"{directory}\Minecraft.ttf" , 28)
 
 class Shop():
     def __init__(self):
         #Importing images of shop and their item images
-        shop_background1 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\shop_background.png").convert_alpha()
-        shop_background2 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\shop_background2.png").convert_alpha() 
+        shop_background1 = pygame.image.load(f"{directory}\sprite\shop_background.png").convert_alpha()
+        shop_background2 = pygame.image.load(f"{directory}\sprite\shop_background2.png").convert_alpha() 
         self.shop_background = [shop_background1,shop_background2]
         self.shop_index = 0
         self.image = self.shop_background
@@ -91,7 +91,7 @@ class Shop():
 
 class Background():
     def __init__(self):
-        self.background = pygame.image.load(f"{directory}\SnakeCrawler\sprite\sky.png").convert_alpha()
+        self.background = pygame.image.load(f"{directory}\sprite\sky.png").convert_alpha()
         self.image = self.background
         self.rect = self.image.get_rect() 
 
@@ -101,24 +101,24 @@ class Background():
 
 class Button():
     def __init__(self, x, y, type):
-        start_image1 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\start_button.png").convert_alpha()
-        start_image2 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\start_button_hover.png").convert_alpha()
+        start_image1 = pygame.image.load(f"{directory}\sprite\start_button.png").convert_alpha()
+        start_image2 = pygame.image.load(f"{directory}\sprite\start_button_hover.png").convert_alpha()
 
-        shop_image1 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\shop_button.png").convert_alpha()
-        shop_image2 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\shop_button_hover.png").convert_alpha()
+        shop_image1 = pygame.image.load(f"{directory}\sprite\shop_button.png").convert_alpha()
+        shop_image2 = pygame.image.load(f"{directory}\sprite\shop_button_hover.png").convert_alpha()
 
-        retry_image1 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\etry_button.png").convert_alpha()
-        retry_image2 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\etry_button_hover.png").convert_alpha()
+        retry_image1 = pygame.image.load(f"{directory}\sprite\etry_button.png").convert_alpha()
+        retry_image2 = pygame.image.load(f"{directory}\sprite\etry_button_hover.png").convert_alpha()
 
-        back_image1 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\ck_button.png").convert_alpha()
-        back_image2 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\ck_button_hover.png").convert_alpha()
+        back_image1 = pygame.image.load(f"{directory}\sprite\ck_button.png").convert_alpha()
+        back_image2 = pygame.image.load(f"{directory}\sprite\ck_button_hover.png").convert_alpha()
 
-        shop_background2_icon = pygame.image.load(f"{directory}\SnakeCrawler\sprite\shop_background2_icon.png").convert_alpha()
-        extra_life_icon = pygame.image.load(f"{directory}\SnakeCrawler\sprite\life.png").convert_alpha()
-        item2 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\item1.png").convert_alpha()
-        item2 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\item1.png").convert_alpha()
+        shop_background2_icon = pygame.image.load(f"{directory}\sprite\shop_background2_icon.png").convert_alpha()
+        extra_life_icon = pygame.image.load(f"{directory}\sprite\life.png").convert_alpha()
+        item2 = pygame.image.load(f"{directory}\sprite\item1.png").convert_alpha()
+        item2 = pygame.image.load(f"{directory}\sprite\item1.png").convert_alpha()
         
-        soldout = pygame.image.load(f"{directory}\SnakeCrawler\sprite\soldout.png").convert_alpha()
+        soldout = pygame.image.load(f"{directory}\sprite\soldout.png").convert_alpha()
 
         self.available = True
         self.type_index = type
@@ -154,9 +154,9 @@ class Button():
 class Player():
     def __init__(self,x,y):
         #Imports of player images for animation purposes, used in line 177
-        player1 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\snakeleft1.png").convert_alpha()
+        player1 = pygame.image.load(f"{directory}\sprite\snakeleft1.png").convert_alpha()
         player1 = pygame.transform.scale(player1,(40,20))
-        player2 = pygame.image.load(f"{directory}\SnakeCrawler\sprite\snakeleft2.png").convert_alpha()
+        player2 = pygame.image.load(f"{directory}\sprite\snakeleft2.png").convert_alpha()
         player2 = pygame.transform.scale(player2,(40,20))
         self.player = [player1,player2]
         self.player_index = 0
@@ -256,7 +256,7 @@ class Platform(pygame.sprite.Sprite):
         super().__init__() #Inheriting all of from pygame Sprite
 
         #The platform images and their given value from others
-        platform_image = pygame.image.load(f"{directory}\SnakeCrawler\sprite\platform.png").convert_alpha()
+        platform_image = pygame.image.load(f"{directory}\sprite\platform.png").convert_alpha()
         self.image = pygame.transform.scale(platform_image,(width,10))
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -286,7 +286,7 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__() #Inheriting all of from pygame Sprite
 
         #Importing the enemy image and their given speed and random direction movement
-        enemy = pygame.image.load(f"{directory}\SnakeCrawler\sprite\enemy.png").convert_alpha()
+        enemy = pygame.image.load(f"{directory}\sprite\enemy.png").convert_alpha()
         self.enemy_direction = random.choice([-1,1])
         self.speed = speed
 
