@@ -338,7 +338,6 @@ def savetxt(path,mode): #A function to save file
             with open(path, mode) as file:
                 file.write(f"{str(high_score)}:{str(coins)}\n{str(items)}")
 
-
 #The calling of classes and Sprites
 shop = Shop()
 
@@ -349,7 +348,7 @@ shop_button = Button(225,400,1)
 retry_button = Button(25,400,2)
 back_button = Button(125,500,3)
 
-player = Player(screen_width //2 , screen_height - 200 )
+player = Player(screen_width //2 , screen_height - 200)
 
 platform_group = pygame.sprite.Group()
 
@@ -361,7 +360,7 @@ plat_move = 0
 enemy_group = pygame.sprite.Group()
 
 
-                                                                                                                        # The main game loop
+# The main game loop
 while True :
     for event in pygame.event.get():
         if event.type == pygame.QUIT :
@@ -370,13 +369,13 @@ while True :
             pygame.quit()
             exit()
 
-                                                                                #Starting state check
+    #Starting state check
     if first_game :
         title = pygame.image.load(f"{directory}\sprite\menu.png")
         screen.blit(title,(0,0))
         
         if start_button.draw() : # Starting screen
-            if "extra_life" in items : extra_life += 1 #Shop item check
+            if "extra_life"  in items : extra_life += 1 #Shop item check
             if "extra_life2" in items : extra_life += 1 #Shop item check
             if "extra_life3" in items : extra_life += 1 #Shop item check
             game_active = True 
@@ -388,8 +387,9 @@ while True :
                 shop_game = False   
 
         away_time = pygame.time.get_ticks() #The time spent outside of the actual game
+
     else :
-        if game_active :                                                                                                                                    #Actual game state
+        if game_active :#Actual game state
             game_time = (pygame.time.get_ticks() - away_time) //1000 #Actual game time in seconds
 
             #How far the player had scroll up and add it to the background then repeat
@@ -439,7 +439,7 @@ while True :
                     enemy_group.add(bird)
             enemy_group.update(screen_width,scroll)
 
-                                                                    #The auto scrolling up the screen with value from before
+            #The auto scrolling up the screen with value from before
             if scroll > 0:
                 score += scroll
                 coins += score//1000
@@ -463,7 +463,7 @@ while True :
             if player.rect.top > screen_height : 
                 game_active = False
 
-                                                                                                                     #Game Over state
+        #Game Over state
         else : 
             #Drawing the white game over screen until the display is fully covered
             if counter_fade < screen_height : 
