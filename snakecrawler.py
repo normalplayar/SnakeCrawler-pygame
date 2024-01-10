@@ -9,9 +9,11 @@ screen_width = 400
 screen_height = 600
 screen = pygame.display.set_mode((screen_width,screen_height),pygame.RESIZABLE)
 pygame.display.set_caption("Snake Crawler")
-directory = os.getcwd()
 clock = pygame.time.Clock()
 fps = 60
+
+#Finding where this file is located on the disk, used to savefile
+directory = os.getcwd()
 
 original_coins = 0
 coins = 0
@@ -21,7 +23,7 @@ if os.path.exists(f"{directory}\savefile.txt"):
     with open(f"{directory}\savefile.txt","r") as file:
         stats = file.readline()
         if len(stats) >= 3 : #Making sure the length of first line is atleast 3 as a default value of saving
-            seperate = stats.index(":")
+            seperate = stats.index(":")  
             high_score = int(stats[ 0 : seperate])
             original_coins = int(stats[ seperate + 1 : ])
             coins += original_coins
@@ -60,23 +62,29 @@ class Shop():
         #Importing images of shop and their item images
         shop_background1 = pygame.image.load(f"{directory}\sprite\shop_background.png").convert_alpha()
         shop_background2 = pygame.image.load(f"{directory}\sprite\shop_background2.png").convert_alpha() 
+        #They are in a list to be choosen later on
         self.shop_background = [shop_background1,shop_background2]
         self.shop_index = 0
         self.image = self.shop_background
         self.rect = self.image[self.shop_index].get_rect()
 
-        #Using the Button for when buying an item
+        #Using the customise Button class for when buying an item 
         self.item1_button = Button(50,100,4)
         self.item2_button = Button(130,100,5)
-        self.item3_button = Button(210,100,6)
-        self.item4_button = Button(290,100,7)
-    def draw(self):
-        #Update the item sprite
+        self.item3_button = Button(210,100,5)
+        self.item4_button = Button(290,100,5)
+
+    def draw(self): #Update the item sprite 
         global extra_life
+
+        #Checking if the player had bought the new background in the safevile
         if "shop_background2" in items : self.shop_index = 1
         screen.blit(self.image[self.shop_index],self.rect)
+
+        #Display amount of coins the player have and update it when changed
         draw_text("Coins: "+ str(coins), large_font, "Black", 175, 0)
         
+        #The available items that can be bought
         self.item1_button.buy("shop_background2",500)
         draw_text("500",large_font,"Black",65,180)
 
@@ -90,17 +98,20 @@ class Shop():
         draw_text("5000",large_font,"Black",295,180)
 
 class Background():
-    def __init__(self):
+    def __init__(self): #Loading the background
         self.background = pygame.image.load(f"{directory}\sprite\sky.png").convert_alpha()
         self.image = self.background
         self.rect = self.image.get_rect() 
 
     def draw_background(self,background_scrolls): 
+        #Draw 2 same background above and below the origin
+        #Then they will scroll down when the player moves
         screen.blit(self.background,(0, 0 + background_scrolls))
         screen.blit(self.background,(0, -600 + background_scrolls))
 
 class Button():
     def __init__(self, x, y, type):
+        #Imports the images
         start_image1 = pygame.image.load(f"{directory}\sprite\start_button.png").convert_alpha()
         start_image2 = pygame.image.load(f"{directory}\sprite\start_button_hover.png").convert_alpha()
 
@@ -118,35 +129,43 @@ class Button():
 
         soldout = pygame.image.load(f"{directory}\sprite\soldout.png").convert_alpha()
 
-        self.available = True
         self.type_index = type
         self.number_index = 0
-        image = [[start_image1,start_image2],[shop_image1,shop_image2],[retry_image1,retry_image2],[back_image1,back_image2],[shop_background2_icon,soldout],[extra_life_icon,soldout],[extra_life_icon,soldout],[extra_life_icon,soldout]]
+        image = [[start_image1,start_image2],[shop_image1,shop_image2],[retry_image1,retry_image2],[back_image1,back_image2],[shop_background2_icon,soldout],[extra_life_icon,soldout]]
         self.image = image
         self.rect = self.image[self.type_index][self.number_index].get_rect()
         self.rect.topleft = (x,y)
 
+        #Used to check if the items has been baught or not with Boolean value
+        self.available = True
+
     def draw(self):
+        #Get the mouse location and if it collide, change image to the hover version
         self.mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(self.mouse_pos):
             self.number_index = 1
+
+            #If the player click on the item while colliding it, return True. Used to maneuver screens
             if pygame.mouse.get_pressed()[0] == 1 : return True
         else :  self.number_index = 0
         screen.blit(self.image[self.type_index][self.number_index], (self.rect.x, self.rect.y))
     
-    def buy(self,shop_item,price):
+    def buy(self,shop_item,price): #A buy function to help the Shop class
         global coins, items
         self.mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(self.mouse_pos):
             self.number_index = 0
+            #If the player click on the item while colliding with enough coins and not present in the players item string, the item will be bought
+            # while the item will be added to the player items string and the coins get minus by the price
             if pygame.mouse.get_pressed()[0] == 1 and coins >= price :
                 if shop_item not in items :
                     items = f"{items}{shop_item}\n"
                     coins -= price
                     savetxt(f"{directory}\savefile.txt","w")
+        #If the item is present in the player items string, the sold out image will appear
         if shop_item in items : self.number_index = 1
-
         screen.blit(self.image[self.type_index][self.number_index], (self.rect.x, self.rect.y))
+        #Returns the new updated amount of coins
         return coins
 
 class Player():
