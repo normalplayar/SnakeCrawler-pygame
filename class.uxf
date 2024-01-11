@@ -1,0 +1,72 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>240</x><y>20</y><w>230</w><h>140</h></coordinates><panel_attributes>Shop
+--
++shop_background = list
++shop_index = int
++image = surface
++rect = rectangle
++item1-4_button = tuple
+--
++__init__()
++draw()
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>180</y><w>230</w><h>110</h></coordinates><panel_attributes>Background
+--
++background = load image
++image = surface
++rect = rectangle
+--
++__init__()
++draw_background(background_scroll)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>310</y><w>230</w><h>170</h></coordinates><panel_attributes>Button
+--
++type_index = type
++number_index = int
++image = surface
++rect = rectangle
++rect.topleft = (x,y)
++available = Bool
+--
++__init__(x,y,type)
++draw()
++buy(shop_item,price) = coins
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>490</x><y>20</y><w>230</w><h>280</h></coordinates><panel_attributes>Player
+--
++player = list
++player_index = int
++image = surface
++facing = Bool
++width = int
++height = int
++rect = rectangle
++rect.center = (x,y)
++rect.x = int
++rect.y = int
++speed_y = 0
+--
++__init__(x,y)
++player_input() = scroll
++display_score()
++draw()
++update()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>510</y><w>230</w><h>170</h></coordinates><panel_attributes>Platform
+--
++image = surface
++rect = rectangle
++rect.x = x
++rect.y = y
++movement = movement
++counter_movement = int
++direction_movement = int
+--
++__init__(x,y,width,movement)
++update(scroll)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>730</x><y>510</y><w>230</w><h>170</h></coordinates><panel_attributes>Enemy
+--
++enemy_direction = int
++speed = speed
++image = surface
++rect = rectangle
++rect.x = screen_width
++rect.y = y
+--
++__init__(screen_width,y,speed)
++update(screen_width,scroll)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>670</x><y>430</y><w>100</w><h>30</h></coordinates><panel_attributes>Sprite</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>630</x><y>450</y><w>100</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>80;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>730</x><y>450</y><w>130</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;110;60</additional_attributes></element></diagram>

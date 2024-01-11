@@ -205,7 +205,7 @@ class Player():
             changed_x += 10
             self.facing = True
 
-        #Animation loop for the player
+        #Animation loop for the player by swaping 2 different images
         self.player_index += 0.125
         if self.player_index >= len(self.player) : self.player_index = 0
         self.image = self.player[int(self.player_index)]
@@ -218,7 +218,7 @@ class Player():
         if self.rect.left + changed_x < 0 : changed_x = 0 - self.rect.left
         if self.rect.right + changed_x > screen_width : changed_x = screen_width - self.rect.right
 
-        #No collision to move player up when jumping and collision when falling
+        #Allowing the player to jump on platforms
         for plat in platform_group:
             if plat.rect.colliderect(self.rect.x, self.rect.y + changed_y , self.width, self.height) :   
                 if self.rect.bottom < plat.rect.centery :
@@ -227,8 +227,8 @@ class Player():
                         changed_y = 0 
                         self.speed_y = -20
 
-
         #When the player touches the bottom of the screen with an extra life, they would bounce back up and minus the life
+        #Otherwise when they dont have an extra life, they will fall off the screen
         if (self.rect.bottom + changed_y > screen_height) and extra_life >= 1: 
             changed_y = 0 
             self.speed_y = -35
@@ -398,7 +398,7 @@ while True :
             if background_scroll >= 600 : background_scroll = 0
             Background.draw_background(background,background_scroll)
 
-            #Numbers of platform allowed to be generated
+            #Numbers of platform allowed to be generated with the algorithm
             if len(platform_group) <= counter_platform :
                 plat_y = platform.rect.y - random.randint(80,120)
                 #Difficulties ramping with time
